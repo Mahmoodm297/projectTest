@@ -14,8 +14,7 @@ pipeline {
             steps {
                 script {
 					script {
-						docker.image('postgres:9.6').withRun("-h ${env.POSTGRES_HOST} 
-						-e POSTGRES_USER=${env.POSTGRES_USER} -e POSTGRES_PASSWORD=${env.POSTGRES_PASSWORD}") { db ->
+						docker.image('postgres:9.6').withRun("-h ${env.POSTGRES_HOST} -e POSTGRES_USER=${env.POSTGRES_USER} -e POSTGRES_PASSWORD=${env.POSTGRES_PASSWORD}") { db ->
 						// You can your image here but you need psql to be installed inside
 							docker.image('postgres:9.6').inside("--link ${db.id}:db") {
 								sh '''
