@@ -4,6 +4,9 @@ pipeline {
 	  environment {
 		  POSTGRES_HOST = 'localhost'
 		  POSTGRES_USER = 'myuser'
+		  POSTGRES_DB = 'csv'
+		  POSTGRES_PASSWORD = 'myPasswd'
+		  
 	  }
 
     stages {
