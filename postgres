@@ -12,8 +12,26 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
+                script {
+					script {
+						docker.image('postgres:9.6').withRun("-h ${env.POSTGRES_HOST} 
+						-e POSTGRES_USER=${env.POSTGRES_USER} -e POSTGRES_PASSWORD=${env.POSTGRES_PASSWORD}") { db ->
+						// You can your image here but you need psql to be installed inside
+							docker.image('postgres:9.6').inside("--link ${db.id}:db") {
+								sh '''
+									psql --version
+									until psql -h ${POSTGRES_HOST} -U ${POSTGRES_USER} -W  ${POSTGRES_PASSWORD} -c "select 1" > /dev/null 2>&1 || [ $RETRIES -eq 0 ]; do
+										echo "Waiting for postgres server, $((RETRIES-=1)) remaining attempts..."
+										sleep 1
+									done
+								'''
+							sh 'echo "your commands here"'
+							}		
+						}
             }
+					
+				}
+			}
         }
         stage('Test') {
             steps {
