@@ -7,15 +7,11 @@ pipeline {
 		Port = '5432'
 		PGDATA = '/local/DB'
 		POSTGRES_HOST = 'localhost'
-
 	}
 
     	stages ('retrieve git repo locally') {
-		script {
-           		git credentialsId: 'GitHub', url: 'https://github.com/Mahmoodm297/projectTest.git'
-           		sh "git checkout ${env.BRANCH}"
-          	}
-
+		script { git credentialsId: 'GitHub', url: 'https://github.com/Mahmoodm297/projectTest.git'
+           		sh "git checkout ${env.BRANCH}" }
 	}
 	
 
