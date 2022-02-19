@@ -1,23 +1,24 @@
 pipeline {
     agent any
 	
-	  environment {
-		  POSTGRES_HOST = 'localhost'
-		  POSTGRES_USER = 'myuser'
-		  POSTGRES_DB = 'csvDB'
-		  POSTGRES_PASSWORD = 'myPasswd'
-		  
-	  }
-      stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
+	environment {
+		BRANCH = 'main'
+		POSTGRES_DB = 'csvDB'
+		Port = '5432'
+		PGDATA = '/local/DB'
+		POSTGRES_HOST = 'localhost'
+
+	}
+
+	stages {
+	
+    		stage ('retrieve git repo locally') {
+			git branch: ${env.BRANCH} , credentialsId: 'GitHub', url: 'https://github.com/Mahmoodm297/projectTest.git'
+           		sh "git checkout ${env.BRANCH}"
+          	}
+
+	}
+	}
+	
+
 }
-
-
