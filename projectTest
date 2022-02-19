@@ -14,8 +14,8 @@ pipeline {
 	
     		stage ('retrieve git repo locally') {
 			steps {
-			      git branch: ${env.BRANCH} , credentialsId: 'GitHub', url: 'https://github.com/Mahmoodm297/projectTest.git'
-           		      sh "git checkout "${env.BRANCH}""
+			      git branch: 'main' , credentialsId: 'GitHub', url: 'https://github.com/Mahmoodm297/projectTest.git'
+           		      sh "ls -la"
 			}
           	}
 	}
