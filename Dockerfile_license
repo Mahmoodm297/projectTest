@@ -1,0 +1,29 @@
+FROM centos:7.9.2009
+
+
+ENV HOST='jenkins7'
+RUN yum -y update
+RUN yum -y remove java
+RUN yum install -y \
+       redhat-lsb-core \ 
+       lsof \
+       which \
+       curl \
+       java-1.8.0-openjdk \
+       java-1.8.0-openjdk-devel
+RUN yum clean all
+RUN mkdir /local
+COPY . /local
+#COPY capsync_agent /local
+#COPY CapSync30_Home.tar.gz /local
+WORKDIR /local
+RUN tar xf CapSync30_Home.tar.gz
+#groupadd -g 500 ec2-user
+#useradd -g 500 -M -u 500 -s /bin/csh  ec2-user
+RUN groupadd -g 204 lmadmin
+RUN useradd -g 204 -M -u 35114 licadm
+#RUN usermod -G lmadmin licadm
+EXPOSE 5280
+EXPOSE 6280
+EXPOSE 5281
+CMD ["/local/capsync_agent","start"]

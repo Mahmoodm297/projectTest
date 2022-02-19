@@ -1,0 +1,30 @@
+
+
+
+
+
+
+docker cp 63fe3e648989:/local/CapSync30_Home/jenkins7/license_files/license_file.latest .
+docker build -t capsync .
+docker run --network host -t capsync
+
+docker ps 
+
+docker stop 63fe3e648989
+
+
+
+ /local/CapSync30_Home/BIN/CapSync30/tools.lnx86/bin/ckout_test -f Integrated_Metrics_Center -v 21.0 -I
+
+
+docker run --mac-address 02:42:ac:11:00:02 -p 10.181.131.153:5280:5280 -p 10.181.131.153:6280:6280  -p 10.181.131.153:5281:5281 --detach -t capsync
+docker exec -it `docker ps | grep -w capsync| awk '{print $1}'`   /bin/bash
+docker stop `docker ps | grep -w capsync| awk '{print $1}'`
+
+
+
+
+docker run   -p 5432:5432 --detach -t postgress
+docker exec -it `docker ps | grep -w postgress| awk '{print $1}'`   /bin/bash
+psql -d csvDB -U dockeruser -W		dockerPasswd
+#sh "docker run -p ${env.Port}:${env.Port} -e PGDATA=${env.PGDATA}

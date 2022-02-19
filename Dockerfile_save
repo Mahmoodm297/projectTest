@@ -1,0 +1,6 @@
+FROM postgres:latest
+ENV POSTGRES_HOST localhost
+ENV POSTGRES_USER dockeruser
+ENV POSTGRES_DB csvDB
+ENV POSTGRES_PASSWORD dockerPasswd
+ENV PGDATA /local/DB
