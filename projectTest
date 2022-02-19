@@ -2,6 +2,7 @@ pipeline {
     agent any
 	
 	environment {
+		BUILD = 'postgres'
 		BRANCH = 'main'
 		POSTGRES_DB = 'csvDB'
 		Port = '5432'
