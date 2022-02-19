@@ -1,6 +1,23 @@
 pipeline {
     agent any
-    stages{
-        echo "test test"
+	
+	  environment {
+		  POSTGRES_HOST = 'localhost'
+		  POSTGRES_USER = 'myuser'
+		  POSTGRES_DB = 'csvDB'
+		  POSTGRES_PASSWORD = 'myPasswd'
+		  
+	  }
+      stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
     }
 }
+
