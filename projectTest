@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+	
+	environment {
+		BRANCH = 'main'
+		POSTGRES_DB = 'csvDB'
+		Port = '5432'
+		PGDATA = '/local/DB'
+		POSTGRES_HOST = 'localhost'
+
+	}
+
+    	stages ('retrieve git repo locally') {
+		script {
+           		git credentialsId: 'GitHub', url: 'https://github.com/Mahmoodm297/projectTest.git'
+           		sh "git checkout $BRANCH"
+          	}
+
+	}
+	stages ('Run Postgres Dockerfile') {
+		withCredentials([usernamePassword(credentialsId: 'postgres', usernameVariable: 'POSTGRES_USER', passwordVariable: 'POSTGRES_PASSWORD')]) {
+			    #sh "docker run -p ${env.Port}:${env.Port} -e PGDATA=${env.PGDATA}
+			    docker.image('postgres:9.6').withRun(" -h ${env.POSTGRES_HOST} -e POSTGRES_USER=${POSTGRES_USER}
+			        -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} -e PGDATA=${env.PGDATA} -p ${env.Port}:${env.port}")
+
+			}
+		}
+
+}
