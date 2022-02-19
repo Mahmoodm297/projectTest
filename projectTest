@@ -1,8 +1,4 @@
 pipeline {
-    environment {
-        test: '123'
-    }
-    
     stages ('test') {
         echo "test test"
     }
