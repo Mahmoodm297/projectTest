@@ -1,18 +1,9 @@
 pipeline {
-	agent any
-	
-	environment {
-		BRANCH = 'main'
-		POSTGRES_DB = 'csvDB'
-		Port = '5432'
-		PGDATA = '/local/DB'
-		POSTGRES_HOST = 'localhost'
-	}
-
-    	stages ('retrieve git repo locally') {
-		git branch: 'main', credentialsId: 'GitHub', url: 'https://github.com/Mahmoodm297/projectTest.git'
-		sh "git checkout ${env.BRANCH}"
-		
-           	
-	}
+    environment {
+        test: '123'
+    }
+    
+    stages ('test') {
+        echo "test test"
+    }
 }
