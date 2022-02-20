@@ -38,7 +38,13 @@ pipeline {
 		
 		stage ('Running Postgres Dockerfile') {
 			steps {	
-				sh ("docker run   -p 5432:5432 --detach -t postgress")
+				sh ("./start-postgres.sh")
+			}
+		}
+		
+		stage ('Download CSV and loaded it to Postgress') {
+			steps {	
+				sh ("/usr/bin/python3.6 pythonProject/main.py")
 			}
 		}
 	
