@@ -23,7 +23,7 @@ pipeline {
 		stage ('Create a Dockerfile') {
 			steps {	
 				withCredentials([usernamePassword(credentialsId: 'postgres', usernameVariable: 'POSTGRES_USER', passwordVariable: 'POSTGRES_PASSWORD')]) {
-					sh "env > /tmp/env"
+					sh "./createDockerFile.sh"
 				}
 			}
 		}
