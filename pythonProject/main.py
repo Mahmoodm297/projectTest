@@ -1,4 +1,4 @@
-import sys
+import sys, os
 import boto3, botocore
 from sqlalchemy import create_engine
 import pandas as pd
@@ -10,10 +10,15 @@ import sqlalchemy_handler
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 
-def connect_to_db(user: str, passwd: str, db: str, host: str, port=5432):
+def connect_to_db( port=5432 ):
+    my_env = os.environ.copy()
+    user = my_env['POSTGRES_USER']
+    pass1 = my_env['POSTGRES_PASSWORD']
+    db = my_env['POSTGRES_DB']
+    host = my_env['POSTGRES_HOST']
     engine = None
     try:
-        engine = create_engine('postgresql://'+user+':'+passwd+'@'+host+':'+str(port)+'/'+db)
+        engine = create_engine('postgresql://'+user+':'+pass1+'@'+host+':'+str(port)+'/'+db)
     except Exception as e:
         print("Can not connect to DB there is an Error ")
         print(f"Error=>{e}")
@@ -32,7 +37,7 @@ def download_csv(s3name: str, filename: str, target: str):
 
     except (Exception, botocore.exceptions.ClientError, botocore.exceptions.ParamValidationError) as e:
         print(f"Error occurred while trying to download {filename} => the Error {e}")
-        sys.exit()
+        #sys.exit()
     return s3
 
 
@@ -42,6 +47,14 @@ def load_file_db (filename, table, engine):
         pd_file.to_sql(con=engine, name=table, if_exists='append')
     except Exception as e:
         print(f"Error load CSV file to DB ==> {e}")
+
+def get_engine ():
+    my_env = os.environ.copy()
+    user = my_env['POSTGRES_USER']
+    pass1 = my_env['POSTGRES_PASSWORD']
+    db = my_env['POSTGRES_DB']
+    host = my_env['POSTGRES_HOST']
+    engine = connect_to_db(user, pass1, db, host, 5432)
 
 
 # Press the green button in the gutter to run the script.
