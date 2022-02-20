@@ -36,7 +36,7 @@ def download_csv(s3name: str, filename: str, target: str):
 
     except (Exception, botocore.exceptions.ClientError, botocore.exceptions.ParamValidationError) as e:
         print(f"Error occurred while trying to download {filename} => the Error {e}")
-        #sys.exit()
+        sys.exit()
     return s3
 
 
