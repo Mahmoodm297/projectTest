@@ -27,14 +27,20 @@ pipeline {
 				}
 			}
 		}
-		stage ('build docker image') {
+		
+		stage ('build docker  image') {
 			steps {	
 				script {
-				docker.build("postgres")
+				docker.build("localpostgres")
 				}
 			}
 		}
 		
+		stage ('Running Postgres Dockerfile') {
+			steps {	
+				sh ("docker run   -p 5432:5432 --detach -t postgress")
+			}
+		}
 	
 		
 	}
