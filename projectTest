@@ -16,8 +16,7 @@ pipeline {
     		stage ('retrieve git repo locally') {
 			steps {
 			      git branch: 'main' , credentialsId: 'GitHub', url: 'https://github.com/Mahmoodm297/projectTest.git'
-           		      sh ("ls -la")
-			}
+           		}
           	}
 		
 		stage ('Create a Dockerfile') {
@@ -38,7 +37,13 @@ pipeline {
 		
 		stage ('Running Postgres Dockerfile') {
 			steps {	
-				sh ("docker run   -p 5432:5432 --detach -t postgress")
+				sh ("./start-postgres.sh")
+			}
+		}
+		
+		stage ('Download CSV and loaded it to Postgress') {
+			steps {	
+				sh ("/usr/bin/python3.6 pythonProject/main.py")
 			}
 		}
 	
