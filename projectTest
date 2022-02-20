@@ -16,8 +16,7 @@ pipeline {
     		stage ('retrieve git repo locally') {
 			steps {
 			      git branch: 'main' , credentialsId: 'GitHub', url: 'https://github.com/Mahmoodm297/projectTest.git'
-           		      sh ("ls -la")
-			}
+           		}
           	}
 		
 		stage ('Create a Dockerfile') {
