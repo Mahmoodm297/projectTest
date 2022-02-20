@@ -16,27 +16,18 @@ pipeline {
     		stage ('retrieve git repo locally') {
 			steps {
 			      git branch: 'main' , credentialsId: 'GitHub', url: 'https://github.com/Mahmoodm297/projectTest.git'
-           		      sh "ls -la"
+           		      sh ("ls -la")
 			}
           	}
 		
 		stage ('Create a Dockerfile') {
 			steps {	
 				withCredentials([usernamePassword(credentialsId: 'postgres', usernameVariable: 'POSTGRES_USER', passwordVariable: 'POSTGRES_PASSWORD')]) {
-					sh "env > /tmp/env"
+					sh ("./createDockerFile.sh")
 				}
 			}
 		}
 	
-		stage ('Run Postgres Dockerfile') {
-			steps {	
-				withCredentials([usernamePassword(credentialsId: 'postgres', usernameVariable: 'POSTGRES_USER', passwordVariable: 'POSTGRES_PASSWORD')]) {
-					docker.image('postgres:9.6').withRun(' -h ${env.POSTGRES_HOST} -e "POSTGRES_USER=${POSTGRES_USER}" -e "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}" -t postgress '){ c ->
-						echo "Running DockerPostgress"
-					}
-
-				}
-			}
-		}
+		
 	}
 }
