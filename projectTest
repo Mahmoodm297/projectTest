@@ -23,12 +23,12 @@ pipeline {
 		stage ('Create a Dockerfile') {
 			steps {	
 				withCredentials([usernamePassword(credentialsId: 'postgres', usernameVariable: 'POSTGRES_USER', passwordVariable: 'POSTGRES_PASSWORD')]) {
-					echo "FROM postgres
-					ENV POSTGRES_HOST=${env.POSTGRES_HOST}
-					ENV POSTGRES_USER=${POSTGRES_USER}
-					ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-					ENV POSTGRES_DB=${env.POSTGRES_DB}
-					EXPOSE 5432" > Dockerfile
+					echo "FROM postgres" > /tmp/dock
+					echo "ENV POSTGRES_HOST=${env.POSTGRES_HOST}">> /tmp/dock
+					echo "ENV POSTGRES_USER=${POSTGRES_USER}" >> /tmp/dock
+					echo "ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}" >> /tmp/dock
+					echo "ENV POSTGRES_DB=${env.POSTGRES_DB}" >> /tmp/dock
+					echo "EXPOSE 5432" >> Dockerfile
 				}
 			}
 		}
