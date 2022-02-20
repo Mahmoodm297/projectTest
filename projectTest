@@ -2,7 +2,7 @@ pipeline {
     agent any
 	
 	environment {
-		BUILD = 'postgres'
+		BUILD = 'postgress'
 		BRANCH = 'main'
 		POSTGRES_DB = 'csvDB'
 		Port = '5432'
@@ -30,7 +30,7 @@ pipeline {
 		stage ('build docker  image') {
 			steps {	
 				script {
-				docker.build("localpostgres")
+				docker.build(${env.BUILD})
 				}
 			}
 		}
