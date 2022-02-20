@@ -10,7 +10,7 @@ import sqlalchemy_handler
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 
-def connect_to_db( port=5432 ):
+def connect_to_db(port=5432):
     my_env = os.environ.copy()
     user = my_env['POSTGRES_USER']
     pass1 = my_env['POSTGRES_PASSWORD']
@@ -31,7 +31,6 @@ def download_csv(s3name: str, filename: str, target: str):
 
     try:
         s3 = boto3.client('s3')
-        #s3.download_fileobj(s3name, filename, target)
         with open(target, 'wb') as f:
             s3.download_fileobj(s3name, filename, f)
 
@@ -48,19 +47,11 @@ def load_file_db (filename, table, engine):
     except Exception as e:
         print(f"Error load CSV file to DB ==> {e}")
 
-def get_engine ():
-    my_env = os.environ.copy()
-    user = my_env['POSTGRES_USER']
-    pass1 = my_env['POSTGRES_PASSWORD']
-    db = my_env['POSTGRES_DB']
-    host = my_env['POSTGRES_HOST']
-    engine = connect_to_db(user, pass1, db, host, 5432)
-
-
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     f = '/tmp/download_emp'
-    engine = connect_to_db('dockeruser', 'dockerPasswd', 'csvDB', 'vlptk-jenkinit01', 5432)
+    #engine = connect_to_db('dockeruser', 'dockerPasswd', 'csvDB', 'vlptk-jenkinit01', 5432)
+    engine = connect_to_db(5432)
     download_csv('mahmoodm297', 'employees.csv', f)
     load_file_db(f, 'empleyees', engine)
 
