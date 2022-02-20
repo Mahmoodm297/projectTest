@@ -27,6 +27,7 @@ pipeline {
 				}
 			}
 		}
+		
 		stage ('build docker  image') {
 			steps {	
 				script {
@@ -34,14 +35,10 @@ pipeline {
 				}
 			}
 		}
-		stage ('Run Postgres Dockerfile') {
+		
+		stage ('Running Postgres Dockerfile') {
 			steps {	
-				withCredentials([usernamePassword(credentialsId: 'postgres', usernameVariable: 'POSTGRES_USER', passwordVariable: 'POSTGRES_PASSWORD')]) {
-					docker.image('localpostgres').withRun(" -p 5432:5432 "){ c ->
-						echo "Running DockerPostgress"
-					}
-
-				}
+				sh ("docker run   -p 5432:5432 --detach -t postgress")
 			}
 		}
 	
