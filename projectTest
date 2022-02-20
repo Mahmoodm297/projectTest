@@ -29,7 +29,9 @@ pipeline {
 		}
 		stage ('build docker image') {
 			steps {	
+				script {
 				docker.build("postgres", "./DockerFile")
+				}
 			}
 		}
 		
