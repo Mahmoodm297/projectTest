@@ -44,7 +44,7 @@ pipeline {
 		stage ('Download CSV and loaded it to Postgress') {
 			steps {	
 				withCredentials([usernamePassword(credentialsId: 'postgres', usernameVariable: 'POSTGRES_USER', passwordVariable: 'POSTGRES_PASSWORD')]) {
-					sh ("/usr/bin/python3.6 pythonProject/main.py")
+					sh ("/usr/bin/python3.8 pythonProject/main.py")
 				}
 			}
 		}
