@@ -2,7 +2,7 @@ import sys, os
 import boto3, botocore
 from sqlalchemy import create_engine
 import pandas as pd
-import sqlalchemy_handler
+#import sqlalchemy_handler
 #engine = create_engine('postgresql://username:password@localhost:5432/mydatabase')
 #df.to_sql('table_name', engine, method=psql_insert_copy)
 
