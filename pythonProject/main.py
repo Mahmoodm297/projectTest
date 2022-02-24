@@ -22,7 +22,7 @@ def connect_to_db(port=5432):
     except Exception as e:
         print("Can not connect to DB there is an Error ")
         print(f"Error=>{e}")
-        sys.exit()
+        sys.exit(1)
 
     return engine
 
@@ -36,7 +36,7 @@ def download_csv(s3name: str, filename: str, target: str):
 
     except (Exception, botocore.exceptions.ClientError, botocore.exceptions.ParamValidationError) as e:
         print(f"Error occurred while trying to download {filename} => the Error {e}")
-        sys.exit()
+        sys.exit(1)
     return s3
 
 
